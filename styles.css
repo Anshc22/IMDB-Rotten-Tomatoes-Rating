@@ -1,0 +1,79 @@
+.hotstar-rating-container {
+  display: flex;
+  gap: 4px; /* Slightly reduced gap for smaller circles */
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+.hotstar-rating-circle {
+  /* This is the outermost container. It defines the total size, white border, and the 'padding' background color. */
+  border-radius: 50%;
+  position: relative; /* For positioning pseudo-elements */
+  overflow: hidden; /* Crucial to clip the conic gradient */
+  display: flex; /* For centering the rating text */
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15); /* Soft shadow for depth */
+
+  border: 1px solid #2e2e2e; /* The outermost white border */
+  background-color: #2e2e2e; /* Dark gray background for the "padding" area */
+
+  /* Dynamic width/height will be set by JS */
+  /* e.g., width: 28px; height: 28px; */
+}
+
+/* ::before will now create the colored conic-gradient ring */
+.hotstar-rating-circle::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1; /* Below the text, above the main circle's background */
+  
+  /* This element is slightly smaller than its parent (hotstar-rating-circle)
+     to create the dark gray "padding" effect. */
+  width: calc(100% - 6px); /* Changed: 2px (white border) from each side */
+  height: calc(100% - 6px); /* Changed: 2px (white border) from each side */
+
+  /* The conic-gradient for the filled border will be set by JavaScript via a CSS variable */
+  background: var(--circle-outer-gradient);
+}
+
+/* ::after will create the innermost dark gray solid circle for the text background */
+.hotstar-rating-circle::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: #2e2e2e; /* The solid dark gray background for the rating number */
+  z-index: 2; /* Above the colored ring (::before), below the text (span) */
+
+  /* Size of this inner dark gray circle, creating the colored ring's thickness */
+  width: calc(100% - 8px); /* Changed: 3px thickness for the colored ring from ::before */
+  height: calc(100% - 8px); /* Changed: 3px thickness for the colored ring from ::before */
+}
+
+.hotstar-rating-icon {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 2px;
+  display: block;
+}
+
+.hotstar-rating-value {
+  position: relative;
+  z-index: 3; /* Text on top of all other layers */
+  font-weight: bold;
+  /* Color will be set dynamically by JavaScript */
+  display: flex; /* Allows alignment of number and percentage */
+  align-items: baseline; /* Aligns the base of the text for numbers and % */
+  justify-content: center;
+  line-height: 1; /* Ensures single line height for centering */
+}
+
+.hotstar-rating-value .percent-symbol {
+    font-size: 0.6em; /* Smaller font size for the '%' symbol */
+    margin-left: 1px; /* Small space between number and % */
+}
+
+/* The .rotten-tomatoes-circle specific text color rule can be removed as it's handled in JS now */

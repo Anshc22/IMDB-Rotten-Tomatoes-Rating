@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "Movie Show Ratings",
+  "version": "1.3",
+  "description": "Show IMDB and Rotten Tomatoes ratings for Netflix,Amazon Prime Video , Hotstar etc platforms content.",
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.hotstar.com/*",
+    "https://www.netflix.com/*",
+    "https://www.primevideo.com/*",
+    "https://www.hulu.com/*",
+    "https://www.peacocktv.com/*",
+    "https://www.crunchyroll.com/*",
+    "https://www.zee5.com/*",
+    "https://www.sonyliv.com/*",
+    "https://tv.apple.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.hotstar.com/*",
+        "https://www.netflix.com/*",
+        "https://www.primevideo.com/*",
+        "https://www.hulu.com/*",
+        "https://www.peacocktv.com/*",
+        "https://www.crunchyroll.com/*",
+        "https://www.zee5.com/*",
+        "https://www.sonyliv.com/*",
+        "https://tv.apple.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

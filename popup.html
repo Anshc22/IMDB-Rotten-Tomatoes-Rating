@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hotstar Ratings</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #181a20;
+        color: #f1f1f1;
+        margin: 0;
+        padding: 0;
+        min-width: 260px;
+        min-height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .popup-container {
+        background: #23262f;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        padding: 20px 18px 16px 18px;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      h2 {
+        margin: 0 0 8px 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffd600;
+        word-break: break-word;
+      }
+      input {
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 1px solid #444;
+        background: #181a20;
+        color: #f1f1f1;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      button {
+        width: 100%;
+        padding: 8px 0;
+        border-radius: 6px;
+        border: none;
+        background: #ffd600;
+        color: #23262f;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #ffe066;
+      }
+      #status {
+        min-height: 18px;
+        color: #90ee90;
+        font-size: 0.98em;
+        word-break: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="popup-container">
+      <h2>OMDB API Key</h2>
+      <input id="apiKey" type="text" placeholder="Enter OMDB API Key" />
+      <button id="saveBtn">Save</button>
+      <div id="status"></div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
