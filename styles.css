@@ -1,0 +1,393 @@
+.hotstar-rating-container {
+  display: flex;
+  gap: 4px; /* Slightly reduced gap for smaller circles */
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+.hotstar-rating-circle {
+  /* This is the outermost container. It defines the total size, white border, and the 'padding' background color. */
+  border-radius: 50%;
+  position: relative; /* For positioning pseudo-elements */
+  overflow: hidden; /* Crucial to clip the conic gradient */
+  display: flex; /* For centering the rating text */
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15); /* Soft shadow for depth */
+
+  border: 1px solid #2e2e2e; /* The outermost white border */
+  background-color: #2e2e2e; /* Dark gray background for the "padding" area */
+
+  /* Dynamic width/height will be set by JS */
+  /* e.g., width: 28px; height: 28px; */
+}
+
+/* ::before will now create the colored conic-gradient ring */
+.hotstar-rating-circle::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1; /* Below the text, above the main circle's background */
+  
+  /* This element is slightly smaller than its parent (hotstar-rating-circle)
+     to create the dark gray "padding" effect. */
+  width: calc(100% - 6px); /* Changed: 2px (white border) from each side */
+  height: calc(100% - 6px); /* Changed: 2px (white border) from each side */
+
+  /* The conic-gradient for the filled border will be set by JavaScript via a CSS variable */
+  background: var(--circle-outer-gradient);
+}
+
+/* ::after will create the innermost dark gray solid circle for the text background */
+.hotstar-rating-circle::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: #2e2e2e; /* The solid dark gray background for the rating number */
+  z-index: 2; /* Above the colored ring (::before), below the text (span) */
+
+  /* Size of this inner dark gray circle, creating the colored ring's thickness */
+  width: calc(100% - 8px); /* Changed: 3px thickness for the colored ring from ::before */
+  height: calc(100% - 8px); /* Changed: 3px thickness for the colored ring from ::before */
+}
+
+.hotstar-rating-icon {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 2px;
+  display: block;
+}
+
+.hotstar-rating-value {
+  position: relative;
+  z-index: 3; /* Text on top of all other layers */
+  font-weight: bold;
+  /* Color will be set dynamically by JavaScript */
+  display: flex; /* Allows alignment of number and percentage */
+  align-items: baseline; /* Aligns the base of the text for numbers and % */
+  justify-content: center;
+  line-height: 1; /* Ensures single line height for centering */
+}
+
+.hotstar-rating-value .percent-symbol {
+    font-size: 0.6em; /* Smaller font size for the '%' symbol */
+    margin-left: 1px; /* Small space between number and % */
+}
+
+/* The .rotten-tomatoes-circle specific text color rule can be removed as it's handled in JS now */
+
+/* Dark Reader-inspired, modern dark mode popup styles */
+body, html {
+  background: #181a1b;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #f1f1f1;
+}
+.popup-container {
+  background: #23262f;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
+  padding: 18px 18px 12px 18px;
+  width: 100%;
+  max-width: 360px;
+  min-width: 320px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 auto;
+}
+h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffb86b;
+  letter-spacing: 0.1px;
+  line-height: 1.2;
+}
+h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffd600;
+  letter-spacing: 0.05px;
+}
+input[type="text"], input[type="number"] {
+  width: 100%;
+  margin-bottom: 0;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: none;
+  background: #23262f;
+  color: #f1f1f1;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: box-shadow 0.18s, background 0.18s;
+  box-shadow: 0 0 0 2px #ffb86b;
+}
+input[type="text"]:focus, input[type="number"]:focus {
+  outline: none;
+  background: #181a1b;
+  box-shadow: 0 0 0 2px #ffb86b;
+}
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  background: #23262f;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: none;
+}
+.range-row input[type="number"] {
+  width: 56px;
+  text-align: center;
+  margin-bottom: 0;
+  font-size: 1em;
+  padding: 6px 0;
+  border-radius: 8px;
+  background: #181a1b;
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 0 0 2px #ffb86b;;
+}
+.range-row input[type="color"] {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: #23262f;
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  transition: box-shadow 0.18s;
+}
+.range-row input[type="color"]:hover, .range-row input[type="color"]:focus {
+  box-shadow: 0 0 0 2px #ffb86b;
+}
+.range-row button.remove-range {
+  background: linear-gradient(90deg, #ffd600 60%, #ffb86b 100%);
+  color: #23262f;
+  font-weight: 700;
+  padding: 6px 6px;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: box-shadow 0.18s, background 0.18s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  letter-spacing: 0.01em;
+}
+.range-row button.remove-range:hover {
+  background: linear-gradient(90deg, #ffb86b 60%, #ffd600 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+}
+
+/* Fade animation for add buttons */
+.add-range-btn {
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1), max-height 0.3s cubic-bezier(0.4,0,0.2,1);
+  max-height: 60px;
+  pointer-events: auto;
+  margin-bottom: 8px;
+  display: block;
+}
+.add-range-btn.fade {
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
+  margin-bottom: 0;
+  display: block;
+}
+
+#add-imdb-range, #add-rt-range {
+  background: #23262f;
+  color: #ffd600;
+  font-weight: 700;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.98rem;
+  padding: 10px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 2px;
+  letter-spacing: 0.01em;
+}
+#add-imdb-range:hover, #add-rt-range:hover {
+  background: #ffd600;
+  color: #23262f;
+}
+
+#saveRangesBtn {
+  flex: 1;
+  background: linear-gradient(90deg, #ffd600 60%, #ffb86b 100%);
+  color: #23262f;
+  font-weight: 800;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  padding: 10px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  letter-spacing: 0.01em;
+  width: 100%;
+}
+#saveRangesBtn:hover {
+  background: linear-gradient(90deg, #ffb86b 60%, #ffd600 100%);
+  color: #181a1b;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+}
+
+#resetRangesBtn {
+  flex: 0.5;
+  background: linear-gradient(90deg, #191919 60%, #000000 100%);
+  color: #ffd600;
+  font-weight: 800;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  padding: 10px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  letter-spacing: 0.01em;
+}
+#resetRangesBtn:hover {
+  background: linear-gradient(90deg, #000000 60%, #191919 100%);
+  color: #ffb86b;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+}
+#status, #rangeStatus {
+  min-height: 16px;
+  color: #ffb86b;
+  font-size: 0.98em;
+  word-break: break-word;
+  margin-top: 2px;
+  font-weight: 600;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  background: #23262f;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 8px;
+}
+/* End dark mode popup styles */
+
+#saveApiKeyBtn {
+  width: 100%;
+  background: linear-gradient(90deg, #ffd600 60%, #ffb86b 100%);
+  color: #23262f;
+  font-weight: 800;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  padding: 7px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  letter-spacing: 0.01em;
+  margin-bottom: 10px;
+}
+#saveApiKeyBtn:hover {
+  background: linear-gradient(90deg, #ffb86b 60%, #ffd600 100%);
+  color: #181a1b;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+}
+
+.alert {
+  display: none;
+  font-weight: 700;
+  font-size: 1.02rem;
+  text-align: center;
+  border-radius: 8px;
+  margin: 8px 0 0 0;
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  background: #ffd600;
+  color: #23262f;
+  border: 1.5px solid #ffb86b;
+  animation: fadeInAlert 0.3s cubic-bezier(0.4,0,0.2,1);
+  z-index: 10;
+}
+.alert.show {
+  display: block;
+}
+.alert.success {
+  background: #28cd41;
+  color: #fff;
+  border: 1.5px solid #28cd41;
+}
+.alert.error {
+  background: #ff4d4f;
+  color: #fff;
+  border: 1.5px solid #ff4d4f;
+}
+@keyframes fadeInAlert {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#reset-alert.alert {
+  margin-top: 8px;
+  background: #ffd600;
+  color: #23262f;
+  border: 1.5px solid #ffb86b;
+}
+#reset-alert.alert.success {
+  background: #28cd41;
+  color: #fff;
+  border: 1.5px solid #28cd41;
+}
+#reset-alert.alert.error {
+  background: #ff4d4f;
+  color: #fff;
+  border: 1.5px solid #ff4d4f;
+}
+#api-alert.alert {
+  margin-top: 8px;
+  background: #ffd600;
+  color: #23262f;
+  border: 1.5px solid #ffb86b;
+}
+#api-alert.alert.success {
+  background: #28cd41;
+  color: #fff;
+  border: 1.5px solid #28cd41;
+}
+#api-alert.alert.error {
+  background: #ff4d4f;
+  color: #fff;
+  border: 1.5px solid #ff4d4f;
+}
+
+.compact-x-btn {
+  background: linear-gradient(90deg, #ffd600 60%, #ffb86b 100%);
+  color: #23262f;
+  font-weight: 900;
+  font-size: 1.3rem;
+  border-radius: 8px;
+  border: none;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  padding: 0;
+  margin-left: 2px;
+}
+.compact-x-btn:hover {
+  background: linear-gradient(90deg, #ffb86b 60%, #ffd600 100%);
+  color: #181a1b;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}

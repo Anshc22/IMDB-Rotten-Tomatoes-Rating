@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hotstar Ratings</title>
+    <meta name="viewport" content="width=360, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body style="width:360px; min-height:540px; overflow-x:hidden;">
+    <div class="popup-container">
+      <h2>OMDB API Key</h2>
+      <input id="apiKey" type="text" placeholder="Enter OMDB API Key" />
+      <button id="saveApiKeyBtn">Save</button>
+      <div id="api-alert" class="alert"></div>
+      <div id="status"></div>
+      <hr style="margin: 16px 0; border: 0; border-top: 1px solid #444;">
+      <h2>Customize Rating Color Ranges</h2>
+      <div id="range-customizer">
+        <div class="range-section" id="imdb-section">
+          <h3>IMDB Ranges</h3>
+          <div id="imdb-ranges"></div>
+          <button id="add-imdb-range">Add IMDB Range</button>
+          <div id="imdb-alert" class="alert"></div>
+        </div>
+        <div class="range-section" id="rt-section">
+          <h3>Rotten Tomatoes Ranges</h3>
+          <div id="rt-ranges"></div>
+          <button id="add-rt-range">Add RT Range</button>
+          <div id="rt-alert" class="alert"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button id="saveRangesBtn" style="flex:1;">Save Ranges</button>
+          <button id="resetRangesBtn" style="flex:1;background:#444;color:#ffd600;">Reset</button>
+          <div id="reset-alert" class="alert"></div>
+        </div>
+        <div id="rangeStatus" style="min-height:18px;color:#ffb347;font-size:0.98em;"></div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
