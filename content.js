@@ -359,8 +359,13 @@ async function injectRatings() {
 
     container.style.gap = `${parentWidth * 0.015}px`;
 
-    container.appendChild(createRatingCircle(ratings.imdb, 'IMDB', parentWidth, currentSizeMultiplier));
-    container.appendChild(createRatingCircle(ratings.rt, 'Rotten Tomatoes', parentWidth, currentSizeMultiplier));
+    // Only show IMDB for Crunchyroll
+    if (hostname.includes('crunchyroll.com')) {
+        container.appendChild(createRatingCircle(ratings.imdb, 'IMDB', parentWidth, currentSizeMultiplier));
+    } else {
+        container.appendChild(createRatingCircle(ratings.imdb, 'IMDB', parentWidth, currentSizeMultiplier));
+        container.appendChild(createRatingCircle(ratings.rt, 'Rotten Tomatoes', parentWidth, currentSizeMultiplier));
+    }
 
     if (parent && getComputedStyle(parent).position === 'static') {
       parent.style.position = 'relative';
